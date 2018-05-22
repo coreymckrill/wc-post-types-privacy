@@ -69,6 +69,7 @@ function speaker_personal_data_exporter( $email_address, $page ) {
  */
 function sponsor_personal_data_exporter( $email_address, $page ) {
 	$props_to_export = [
+		'_wcpt_sponsor_company_name'  => __( 'Company Name', 'wordcamporg' ),
 		'_wcpt_sponsor_first_name'    => __( 'First Name', 'wordcamporg' ),
 		'_wcpt_sponsor_last_name'     => __( 'Last Name', 'wordcamporg' ),
 		'_wcpt_sponsor_email_address' => __( 'Email Address', 'wordcamporg' ),
@@ -92,7 +93,7 @@ function organizer_personal_data_exporter( $email_address, $page ) {
 		'_wcpt_user_id' => __( 'WordPress.org Username', 'wordcamporg' ),
 	];
 
-	return _personal_data_exporter( 'wcb_speaker', $props_to_export, $email_address, $page );
+	return _personal_data_exporter( 'wcb_organizer', $props_to_export, $email_address, $page );
 }
 
 /**
@@ -121,6 +122,16 @@ function _personal_data_exporter( $post_type, array $props_to_export, $email_add
 				$value = $post->$key;
 			} else {
 				$value = get_post_meta( $post->ID, $key, true );
+			}
+
+			if ( '_wcpt_user_id' === $key ) {
+				$user = get_user_by( 'id', $value );
+
+				if ( $user ) {
+					$value = $user->user_login;
+				} else {
+					$value = false;
+				}
 			}
 
 			if ( ! empty( $value ) ) {
@@ -218,14 +229,9 @@ function get_wc_posts( $post_type, $email_address, $page ) {
 
 			if ( $user instanceof WP_User ) {
 				$meta_query[] = [
-					'relation' => 'OR',
 					[
 						'key' => '_wcpt_user_id',
-						'value' => $user->user_login,
-					],
-					[
-						'key' => '_wcpt_user_id',
-						'value' => $user->user_nicename,
+						'value' => $user->ID,
 					],
 				];
 
@@ -249,14 +255,9 @@ function get_wc_posts( $post_type, $email_address, $page ) {
 
 			if ( $user instanceof WP_User ) {
 				$meta_query = [
-					'relation' => 'OR',
 					[
 						'key' => '_wcpt_user_id',
-						'value' => $user->user_login,
-					],
-					[
-						'key' => '_wcpt_user_id',
-						'value' => $user->user_nicename,
+						'value' => $user->ID,
 					],
 				];
 
