@@ -12,7 +12,7 @@ defined( 'WPINC' ) || die();
 use WP_Query, WP_User;
 
 add_filter( 'wp_privacy_personal_data_exporters', __NAMESPACE__ . '\register_personal_data_exporters' );
-add_filter( 'wp_privacy_personal_data_erasers', __NAMESPACE__ . '\register_personal_data_erasers' );
+//add_filter( 'wp_privacy_personal_data_erasers', __NAMESPACE__ . '\register_personal_data_erasers' );
 
 /**
  * Registers the personal data exporter for each WordCamp post type.
