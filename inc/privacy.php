@@ -187,13 +187,19 @@ function register_personal_data_erasers( $erasers ) {
 }
 
 
-function speaker_personal_data_eraser( $email_address, $page ) {}
+function speaker_personal_data_eraser( $email_address, $page ) {
+	// @todo
+}
 
 
-function sponsor_personal_data_eraser( $email_address, $page ) {}
+function sponsor_personal_data_eraser( $email_address, $page ) {
+	// @todo
+}
 
 
-function organizer_personal_data_eraser( $email_address, $page ) {}
+function organizer_personal_data_eraser( $email_address, $page ) {
+	// @todo
+}
 
 
 /**
